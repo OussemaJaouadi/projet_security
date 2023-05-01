@@ -3,7 +3,7 @@ import kerberos
 def getTicket():
 	headers = ""
 	try:
-		_, krb_context = kerberos.authGSSClientInit("host@server.example.tn")
+		_, krb_context = kerberos.authGSSClientInit("host@server.projet.tn")
 		#print("step : "+str(kerberos.authGSSClientStep(krb_context, "")))
 		kerberos.authGSSClient(krb_context,"")
 		#print("Creating auth header......")
