@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}element{% endblock %}
+{% block body %}
+<section id="recent-posts" class="recent-posts sections-bg">
+  <div class="container" >
+
+    <div class="section-header">
+      <h2><bold>Post ID</bold> : {{ el.id }} </h2>
+      <div class="text-center"><a href="/post" class="buy-btn">
+        <i class="bi bi-plus-circle-dotted"></i>
+        Add post
+      </a>
+      <br>
+      <div class="text-center"><a href="/delete/{{el.id}}" class="buy-btn" style="color: rgba(211, 9, 9, 0.844);">
+        <i class="bi bi-trash2"></i>
+        Delete post
+      </a>
+    </div>
+    </div>
+
+    <br>
+
+    <div class="row gy-3">
+      
+      <div class="col-xl-4 col-md-7 offset-4">
+        <article style="height: 330px;" class="align-items-left">
+
+          <h2 class="title">
+            <a href="/post/{{el.id}}">{{ el.title }}</a>
+          </h2>
+          <p class="post-category">{{el.category}}</p>
+
+          <br>
+          <div class="post-img" style="height: 100px;">
+            <p>
+              {{ el.details}}
+            </p>
+          </div>
+
+          <br>
+          <div class="d-flex align-items-center">
+            <img src="{{url_for('static',filename='/img/blog/')}}{{img}}" alt="" class="img-fluid post-author-img flex-shrink-0">
+            <div class="post-meta">
+              <p class="post-author">{{ el.author}}</p>
+              <p class="post-date">
+                <time datetime="{{el.date}}">{{el.date}}</time>
+              </p>
+            </div>
+            
+          </div>
+
+        </article>
+      </div>
+    </div>
+
+  </div>
+</section>
+{% endblock %}

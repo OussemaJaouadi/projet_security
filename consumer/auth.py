@@ -8,7 +8,7 @@ def getTicket():
 		kerberos.authGSSClient(krb_context,"")
 		#print("Creating auth header......")
 		negotiate_details = kerberos.authGSSClientResponse(krb_context)
-		headers = {"Authorization": "Negotiate "+ negotiate_details}
+		headers = {"Authorization":"Negotiate "+negotiate_details}
 	except Exception as err:
-		headers = ""
+		headers = err
 	return headers

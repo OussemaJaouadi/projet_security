@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}All Posts{% endblock %}
+{% block body %}
+
+<section id="services" class="services sections-bg">
+  <div class="container" >
+    {% with messages = get_flashed_messages(with_categories=true) %} 
+    {% if messages %}
+    <ul class="flashes list-group">
+        {% for category,message in messages %}
+        <li class="list-group-item">
+            <div class="alert alert-{{category}}">{{message}}</div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %} 
+    {% endwith %}
+    <br>
+    <div class="section-header">
+      <h2>Our Recent Posts</h2>
+      <a href="/post" class="btn-get-started">
+        <i class="bi bi-plus-circle-dotted"></i>
+        Create Post
+      </a>
+    </div>
+    
+    <div class="row gy-4" data-aos-delay="100">
+      {% for el in posts %}
+      <div class="col-lg-4 col-md-6">
+        <div class="service-item position-relative">
+          <div class="icon">
+            {% if el.category=="Entertainment" %}
+              <i class="bi bi-film"></i>
+            {% endif %}
+            {% if el.category=="IT" %}
+              <i class="bi bi-motherboard-fill"></i>
+            {% endif %}
+            {% if el.category=="Sports" %}
+                <i class="bi bi-nintendo-switch"></i>
+            {% endif %}
+          </div>
+          <h3>{{el.title}}</h3>
+          <p>{{el.details[:10]}}...</p>
+          <a href="/post/{{el.id}}" class="readmore stretched-link">Read more <i class="bi bi-arrow-right"></i></a>
+        </div>
+      </div><!-- End Service Item -->
+    {% endfor %}
+
+    </div>
+
+  </div>
+</section>
+{%endblock%}

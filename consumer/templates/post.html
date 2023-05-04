@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}Post{% endblock %}
+{% block body %}
+<section id="contact" class="contact">
+    <div class="container">
+
+      <div class="section-header">
+        <h2>Create Post</h2>
+        <p>Welcome *flen* you can add a post</p>
+      </div>
+
+      <div class="row gx-lg-0 gy-4">
+
+        <div class="col-lg-8 offset-2 info-container d-flex flex-column align-items-center justify-content-cente">
+          <form action="/post" method="post" role="form" class="php-email-form">
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <input type="text" name="title" class="form-control" id="name" placeholder="Post Title" required>
+              </div>
+            </div>
+            <div class="form-group mt-3">
+              <select  class="form-control" name="category" id="subject" required>
+                        <option value="IT" > IT </option>
+                        <option value="Entertainment" > Entertainment</option>
+                        <option value="Sports"> Sports</option>   
+              </select>
+            </div>
+            <div class="form-group mt-3">
+              <textarea class="form-control" name="details" rows="7" placeholder="Details" required></textarea>
+            </div>
+            <div class="my-3">
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your message has been sent. Thank you!</div>
+            </div>
+            <div class="text-center"><button type="submit">Send Message</button></div>
+          </form>
+        </div><!-- End Contact Form -->
+
+      </div>
+
+    </div>
+  </section>
+
+{% endblock %}

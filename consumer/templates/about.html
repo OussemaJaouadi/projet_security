@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+{% block body %}
+<section id="about" class="about">
+  <div class="section-header">
+    <h2>About Us</h2>
+    This Project is a web application using the <a href="https://flask-kerberos.readthedocs.io/en/latest/"> Kerberos_module </a> to protect some routes
+</div>
+<div> 
+
+</div>
+<div class="col-lg-6">
+    <div class="content ps-0 ps-lg-5">
+      <p class="fst-italic">
+        Those are some functionalities of the app :
+      </p>
+      <ul>
+        <li><i class="bi bi-check-circle-fill"></i> A user can view posts without authentication .</li>
+        <li><i class="bi bi-check-circle-fill"></i> A user must be connected against the <bold> KDC </bold> to get tickets </li>
+        <li><i class="bi bi-check-circle-fill"></i> A user once has ticket can create and delete posts </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+</section>
+
+{% endblock %}
