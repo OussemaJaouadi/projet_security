@@ -1,13 +1,17 @@
 import datetime
 from flask import redirect, render_template,Flask,jsonify, request,flash
 import requests
+from auth import getTicket
+
 
 app = Flask(__name__)
 app.secret_key = "test_secret"
 
 @app.route("/",methods=["GET"])
 def welcome():
-    return render_template("home.html")
+    header = getTicket()
+    r = requests.get('http://localhost:8080/',headers=header).json()['user']
+    return render_template("home.html",user=r)
 
 @app.route("/about",methods=["GET"])
 def about():
@@ -15,7 +19,8 @@ def about():
 
 @app.route("/service",methods=["GET"])
 def get_services():
-    r = requests.get('http://localhost:8080/post').json()
+    header = getTicket()
+    r = requests.get('http://localhost:8080/post',headers=header).json()
     return render_template('service.html',posts=r["posts"])
 
 @app.route('/post',methods=["GET", "POST"])
@@ -25,22 +30,27 @@ def postHandle():
             "title" : request.form.get('title'),
             "details" : request.form.get('details'),
             "category" : request.form.get('category'),
-            "author" : "Server",
             "date" : datetime.date.today().strftime("%Y-%m-%d"),
         }
-        r = requests.post('http://localhost:8080/post',json=post_dict)
+        header = getTicket()
+        r = requests.post('http://localhost:8080/post',headers=header,json=post_dict)
         print(r.json())
         post_id = r.json()['id']
         if post_id :
+            flash("New Item Created Successfully","success")
             return redirect(f'/post/{post_id}')
         else:
-            return "failed to create"
+            flash("Failed To Create","danger")
+            return redirect(f'/post')
     else:
-        return render_template('post.html')  
+        header = getTicket()
+        r = requests.get('http://localhost:8080/',headers=header).json()['user']
+        return render_template('post.html',user=r)  
                       
 @app.route("/post/<int:id>")
 def get_element(id):
-    element = requests.get(f"http://localhost:8080/post/{id}").json()
+    header = getTicket()
+    element = requests.get(f"http://localhost:8080/post/{id}",headers=header).json()
     if element['author'] == "Server" :
         p = "server.jpg"
     else:
@@ -52,7 +62,8 @@ def get_element(id):
 
 @app.route('/delete/<int:id>')
 def delete_element(id):
-    r = requests.delete(f'http://localhost:8080/post/{id}')
+    header = getTicket()
+    r = requests.delete(f'http://localhost:8080/post/{id}',headers=header)
     if(r.status_code == 204 ):
         flash('Item Delete Success',"success")
         return redirect('/service')

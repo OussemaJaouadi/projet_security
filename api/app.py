@@ -2,9 +2,9 @@
  
 import datetime
 from flask import Flask, render_template, request, Response,jsonify
-#from flask_kerberos import init_kerberos
-#from flask_kerberos import requires_authentication
-#from flask_bootstrap import Bootstrap
+from flask_kerberos import init_kerberos
+from flask_kerberos import requires_authentication
+from flask_bootstrap import Bootstrap
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from model import Base,Post
@@ -22,19 +22,24 @@ Session = sessionmaker(bind=engine)
 
 Base.metadata.create_all(engine)
 
+
 @app.route('/')
-#@requires_authentication
-def home():
-	return jsonify()
+@requires_authentication
+def home(user):
+	return jsonify({
+        "user":user.split('@')[0]
+    })
+
 
 @app.route('/post',methods=["GET", "POST"])
-def postHandle():
+@requires_authentication
+def postHandle(user):
     if request.method == 'POST':
         data = request.json
         title = data.get('title')
         details = data.get('details')
         category = data.get('category')
-        author = data.get('author')
+        author = user.split('@')[0]
         date = data.get('date')
         date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
         post = Post(title=title, details=details, category=category, author=author,date=date)
@@ -71,7 +76,8 @@ def postHandle():
         })
                               
 @app.route('/post/<int:post_id>', methods=['GET', 'DELETE'])
-def post(post_id):
+@requires_authentication
+def post(user,post_id):
     # Get the post from the database
     session = Session()
     post = session.query(Post).filter_by(id=post_id).first()
@@ -103,5 +109,5 @@ def post(post_id):
         return '', 204
 
 if __name__ == '__main__':
-	#init_kerberos(app,service='host',hostname='server.projet.tn')
+	init_kerberos(app,service='host',hostname='server.projet.tn')
 	app.run(host='0.0.0.0',port=8080,debug=DEBUG)

@@ -5,6 +5,19 @@
 <section id="recent-posts" class="recent-posts sections-bg">
   <div class="container" >
 
+    {% with messages = get_flashed_messages(with_categories=true) %} 
+    {% if messages %}
+    <ul class="flashes list-group">
+        {% for category,message in messages %}
+        <li class="list-group-item">
+            <div class="alert alert-{{category}}">{{message}}</div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %} 
+    {% endwith %}
+    <br>
+
     <div class="section-header">
       <h2><bold>Post ID</bold> : {{ el.id }} </h2>
       <div class="text-center"><a href="/post" class="buy-btn">
