@@ -1,0 +1,5 @@
+Flask
+libkrb5-dev
+Flask-kerberos
+flask-bootstrap
+sqlalchemy
