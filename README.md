@@ -271,7 +271,7 @@ list #show principals
 | Script  | line  |
 |---|---|
 | ./api/app.py  | 112  |
-| ./consumer/app.py  | 6 |
+| ./consumer/auth.py  | 6 |
 
 2. Then we run the API app as **root** : 
     ```bash
@@ -281,7 +281,7 @@ list #show principals
     ```bash
     su tommy
     kinit
-    python3 consumer/auth.py
+    python3 consumer/app.py
     ```
 
 
