@@ -281,7 +281,7 @@ list #show principals
     ```bash
     su tommy
     kinit
-    python3 consumer/app.py
+    python3 consumer/auth.py
     ```
 
 
